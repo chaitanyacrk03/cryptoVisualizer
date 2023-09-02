@@ -1,215 +1,52 @@
 import { Component, OnInit } from '@angular/core';
+import axios from 'axios';
+import { CryptoCallService } from '../crypto-call.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit{
+    constructor(private cryptoService: CryptoCallService){
+
+    }
   cryptoData:{
+    "id":Number,
     "name": String,
     "symbol": String,
-    "usym": String,
-    "gecko": String
+    "time": String,
+    "image": String,
+    "price":Number,
+    "net_profit_loss":Number
   }[]=[];
   ngOnInit(): void {
-    this.cryptoData=this.getCryptoData()
+    setInterval(()=>{
+      
+    })
+    this.getCryptoData()
   }
-  getCryptoData() {
-    return [
-      {
-          "name": "Ethereum",
-          "symbol": "ETH",
-          "usym": "Ξ",
-          "gecko": "ethereum"
-      },
-      {
-          "name": "Tether",
-          "symbol": "USDT",
-          "usym": "₮",
-          "gecko": "tether"
-      },
-      {
-          "name": "Cardano",
-          "symbol": "ADA",
-          "usym": "₳",
-          "gecko": "cardano"
-      },
-      {
-          "name": "XRP",
-          "symbol": "XRP",
-          "usym": "✕",
-          "gecko": "ripple"
-      },
-      {
-          "name": "Solana",
-          "symbol": "SOL",
-          "usym": "◎",
-          "gecko": "solana"
-      },
-      {
-          "name": "Polkadot",
-          "symbol": "DOT",
-          "usym": "●",
-          "gecko": "polkadot"
-      },
-      {
-          "name": "Dogecoin",
-          "symbol": "DOGE",
-          "usym": "Ð",
-          "gecko": "dogecoin"
-      },
-      {
-          "name": "Dai",
-          "symbol": "DAI",
-          "usym": "◈",
-          "gecko": "dai"
-      },
-      {
-          "name": "Litecoin",
-          "symbol": "LTC",
-          "usym": "Ł",
-          "gecko": "litecoin"
-      },
-      {
-          "name": "Algorand",
-          "symbol": "ALGO",
-          "usym": "Ⱥ",
-          "gecko": "algorand"
-      },
-      {
-          "name": "Bitcoin Cash",
-          "symbol": "BCH",
-          "usym": "Ƀ",
-          "gecko": "bitcoin-cash"
-      },
-      {
-          "name": "ECOMI",
-          "symbol": "OMI",
-          "usym": "Ο",
-          "gecko": "ecomi"
-      },
-      {
-          "name": "Internet Computer",
-          "symbol": "ICP",
-          "usym": "∞",
-          "gecko": "internet-computer"
-      },
-      {
-          "name": "Ethereum Classic",
-          "symbol": "ETC",
-          "usym": "ξ",
-          "gecko": "ethereum-classic"
-      },
-      {
-          "name": "Monero",
-          "symbol": "XMR",
-          "usym": "ɱ",
-          "gecko": "monero"
-      },
-      {
-          "name": "Tezos",
-          "symbol": "XTZ",
-          "usym": "ꜩ",
-          "gecko": "tezos"
-      },
-      {
-          "name": "Iota",
-          "symbol": "MIOTA",
-          "usym": "ɨ",
-          "gecko": "iota"
-      },
-      {
-          "name": "EOS",
-          "symbol": "EOS",
-          "usym": "ε",
-          "gecko": "eos"
-      },
-      {
-          "name": "Bitcoin SV",
-          "symbol": "BSV",
-          "usym": "Ɓ",
-          "gecko": "bitcoin-cash-sv"
-      },
-      {
-          "name": "Maker",
-          "symbol": "MKR",
-          "usym": "M",
-          "gecko": "maker"
-      },
-      {
-          "name": "Zcash",
-          "symbol": "ZEC",
-          "usym": "ⓩ",
-          "gecko": "zcash"
-      },
-      {
-          "name": "Dash",
-          "symbol": "DASH",
-          "usym": "Đ",
-          "gecko": "dash"
-      },
-      {
-          "name": "Nano",
-          "symbol": "XNO",
-          "usym": "Ӿ",
-          "gecko": "nano"
-      },
-      {
-          "name": "Augur",
-          "symbol": "REP",
-          "usym": "Ɍ",
-          "gecko": "augur"
-      },
-      {
-          "name": "Steem",
-          "symbol": "STEEM",
-          "usym": "ȿ",
-          "gecko": "steem"
-      },
-      {
-          "name": "BNB",
-          "symbol": "BNB",
-          "usym": "ȿ",
-          "gecko": "steem"
-      },
-      {
-          "name": "Shiba Inu",
-          "symbol": "SHIB",
-          "usym": "ȿ",
-          "gecko": "steem"
-      },
-      {
-          "name": "Binance USD",
-          "symbol": "BUSD",
-          "usym": "ȿ",
-          "gecko": "steem"
-      },    {
-          "name": "Ethereum Classic",
-          "symbol": "ETC",
-          "usym": "ȿ",
-          "gecko": "steem"
-      },    {
-          "name": "Cronos",
-          "symbol": "CRO",
-          "usym": "ȿ",
-          "gecko": "steem"
-      },    {
-          "name": "The Sandbox",
-          "symbol": "SAND",
-          "usym": "ȿ",
-          "gecko": "steem"
-      },    {
-          "name": "ApeCoin",
-          "symbol": "APE",
-          "usym": "ȿ",
-          "gecko": "steem"
-      },    {
-          "name": "BitTorrent",
-          "symbol": "BTT",
-          "usym": "ȿ",
-          "gecko": "steem"
-      }
-  ]
+   getCryptoData(){
+     axios.get("http://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en")
+    .then((response)=>{
+        let id=0
+        response.data.forEach((data: {
+            current_price: Number;
+            market_cap_change_24h: any;
+             name: any; symbol: any; last_updated: any; image: any; 
+})=>{
+            id+=1
+            this.cryptoService.crypt.next({
+                id:id,
+                name:data.name,
+                symbol:data.symbol,
+                time:data.last_updated,
+                image:data.image,
+                current_price:data.current_price,
+                net_profit_loss:data.market_cap_change_24h
+            })
+        })
+    })
+    .catch()
   }
 
   

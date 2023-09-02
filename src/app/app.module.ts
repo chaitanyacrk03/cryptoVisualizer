@@ -6,18 +6,21 @@ import { AppComponent } from './app.component';
 import { GraphComponent } from './graphs/graph/graph.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { HomeComponent } from './home/home.component';
-
+import { CryptoTableComponent } from './home/crypto-table/crypto-table.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 @NgModule({
   declarations: [
     AppComponent,
     GraphComponent,
     NavBarComponent,
-    HomeComponent
+    HomeComponent,
+    CryptoTableComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     CanvasJSAngularChartsModule ,
+    NgxDatatableModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

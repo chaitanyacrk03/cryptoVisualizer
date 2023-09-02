@@ -1,0 +1,12 @@
+img{
+    width:10%
+}
+.red{
+    color:red
+}
+.green{
+    color:green
+}
+.table-dark.table-striped tbody tr:first-child{
+    display: none;
+}

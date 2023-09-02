@@ -7,11 +7,11 @@ import axios from 'axios';
 })
 export class AppComponent implements OnInit {
   ngOnInit(): void {
-  axios.get('https://rest.coinapi.io/v1/exchangerate/BTC/USD?apikey=45861E98-E13C-4C93-82AC-BB70C88BF490')
-  .then(response=>{
-    console.log(response.data)
-  }
-  );
+  // axios.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en")
+  // .then(response=>{
+  //   console.log(response.data)
+  // }
+  // );
   }
   title = 'cryptoVisualizer';
   //SHOW IN RUPEES AND DOLLAR BOTH

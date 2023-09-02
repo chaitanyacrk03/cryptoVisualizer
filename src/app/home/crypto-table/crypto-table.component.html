@@ -1,0 +1,28 @@
+<table class="table table-striped table-dark">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Symbol</th>
+        <th scope="col">Price</th>
+        <th scope="col">Time</th>
+        <th scope="col">Image</th>
+        <th scope="col">Profit/Loss</th>
+        <th scope="col">See Trend</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of rows">
+        <td>{{data.id}}</td>
+        <td>{{data.name}}</td>
+        <td>{{data.symbol}}</td>
+        <td>{{data.current_price}}</td>
+        <td>{{data.time}}</td>
+        <td><img src="{{data.image}}" alt=""></td>
+        <td [ngClass]="data.net_profit_loss<0? 'red':'green'">{{data.net_profit_loss}}</td>
+        <td><button (click)="openGraph()">{{data.symbol}}</button></td>
+        
+      </tr>
+    </tbody>
+  </table>
