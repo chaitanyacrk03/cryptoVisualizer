@@ -30,12 +30,14 @@ export class HomeComponent implements OnInit{
     .then((response)=>{
         let id=0
         response.data.forEach((data: {
+          id: any;
             current_price: Number;
             market_cap_change_24h: any;
              name: any; symbol: any; last_updated: any; image: any; 
 })=>{
             id+=1
             this.cryptoService.crypt.next({
+                cryptId:data.id,
                 id:id,
                 name:data.name,
                 symbol:data.symbol,

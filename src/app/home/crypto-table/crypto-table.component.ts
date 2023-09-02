@@ -14,8 +14,9 @@ export class CryptoTableComponent implements OnInit{
     "time": String,
     "image": String,
     "current_price":Number,
-    "net_profit_loss":number
-  }[]=[{id:0,name:"MyCrypto",symbol:"MCP",time:"03/10/1998",image:"none",current_price:999999,net_profit_loss:999999}]
+    "net_profit_loss":number,
+    "cryptId":String
+  }[]=[{id:0,name:"MyCrypto",symbol:"MCP",time:"03/10/1998",image:"none",current_price:999999,net_profit_loss:999999,cryptId:"myCoin"}]
   constructor(private csv: CryptoCallService){}
 
     ngOnInit(): void {
@@ -27,6 +28,7 @@ export class CryptoTableComponent implements OnInit{
       console.log(this.rows)
   }
   openGraph(){
+    
     
   }
 }

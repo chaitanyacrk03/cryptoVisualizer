@@ -21,7 +21,7 @@
         <td>{{data.time}}</td>
         <td><img src="{{data.image}}" alt=""></td>
         <td [ngClass]="data.net_profit_loss<0? 'red':'green'">{{data.net_profit_loss}}</td>
-        <td><button (click)="openGraph()">{{data.symbol}}</button></td>
+        <td><button class="button-64" [routerLink]="['charts', data.cryptId]">{{data.symbol}}</button></td>
         
       </tr>
     </tbody>

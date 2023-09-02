@@ -1,36 +1,55 @@
-import { Component } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router'
+import axios from 'axios';
 @Component({
   selector: 'app-graph',
   templateUrl: './graph.component.html',
   styleUrls: ['./graph.component.css']
 })
-export class GraphComponent {
-  dps = [{x:0,y:0}];
+export class GraphComponent implements OnInit{
+	constructor(private route : ActivatedRoute){}
+	id: any;
+	dp=[{
+		x: new Date,
+		y:Number
+	}];
+	ngOnInit(): void {
+		this.id = this.route.snapshot.paramMap.get('id')
+		axios.get(`https://api.coingecko.com/api/v3/coins/${this.id}/market_chart?vs_currency=usd&days=1`).then(
+			(response)=>{
+				for(let i of response.data.prices){
+					this.dp.push({x:new Date(i[0]),y:i[1]})
+				}
+			
+			}
+		)
+	}
 	chart: any;
 	chartOptions = {
-	  exportEnabled: true,
-	  title: {
-		text: "Angular Dynamic Chart"
-	  },
-	  data: [{
-		type: "line",
-		dataPoints: this.dps
-	  }]
-	}
-	getChartInstance(chart: object) {
-		this.chart = chart;
-		setTimeout(this.updateChart, 1000); //Chart updated every 1 second
-	}
-	updateChart = () => {
-		var yVal = this.dps[this.dps.length - 1].y +  Math.round(5 + Math.random() *(-5-5));
-		this.dps.push({x: this.dps[this.dps.length - 1].x + 1, y: yVal});
+		theme: "light2",
+		animationEnabled: true,
+		zoomEnabled: true,
+		title: {
+			text: "Market Capitalization of ACME Corp"
+		},
+		axisY: {
+			labelFormatter: (e: any) => {
+				var suffixes = ["", "K", "M", "B", "T"];
  
-		if (this.dps.length >  10 ) {
-			this.dps.shift();
-		}
-		this.chart.render();
-		setTimeout(this.updateChart, 1000)
+				var order = Math.max(Math.floor(Math.log(e.value) / Math.log(1000)), 0);
+				if(order > suffixes.length - 1)
+					order = suffixes.length - 1;
+ 
+				var suffix = suffixes[order];
+				return "$" + (e.value / Math.pow(1000, order)) + suffix;
+			}
+		},
+		data: [{
+			type: "line",
+			xValueFormatString: "YYYY",
+			yValueFormatString: "$#,###.##",
+			dataPoints: 
+				this.dp
+		}]
 	}	
-
 }
