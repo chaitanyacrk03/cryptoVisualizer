@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
-import axios from 'axios';
 import { CryptoCallService } from 'src/app/crypto-call.service';
 @Component({
   selector: 'app-graph',
