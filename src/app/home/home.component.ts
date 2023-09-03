@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit{
     this.getCryptoData()
   }
    getCryptoData(){
-     let response=this.httpClient.get("http://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en")
+     let response=this.httpClient.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en")
     .subscribe((response:any)=>{
         let id=0
         response.forEach((data: {
