@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import axios from 'axios';
+import Axios from 'axios';
 import { CryptoCallService } from '../crypto-call.service';
 @Component({
   selector: 'app-home',
@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit{
     this.getCryptoData()
   }
    getCryptoData(){
-     axios.get("http://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en")
+     Axios.get("http://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en")
     .then((response:any)=>{
         let id=0
         response.data.forEach((data: {
