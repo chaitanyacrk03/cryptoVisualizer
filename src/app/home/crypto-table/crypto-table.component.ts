@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CryptoCallService } from '../../crypto-call.service';
-import axios from 'axios';
+import {HttpClient} from '@angular/common/http';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-crypto-table',
@@ -19,7 +19,7 @@ export class CryptoTableComponent implements OnInit{
     "net_profit_loss":number,
     "cryptId":String
   }[]=[{id:0,name:"MyCrypto",symbol:"MCP",time:"03/10/1998",image:"none",current_price:999999,net_profit_loss:999999,cryptId:"myCoin"}]
-  constructor(private csv: CryptoCallService,private router: Router){}
+  constructor(private csv: CryptoCallService,private router: Router,private httpClient:HttpClient){}
 
     ngOnInit(): void {
       this.csv.crypt.subscribe((data)=>{
@@ -31,15 +31,15 @@ export class CryptoTableComponent implements OnInit{
   }
   async openGraph(cryptId: any){
     this.csv.cryptData=[]
-    await axios.get(`https://api.coingecko.com/api/v3/coins/${cryptId}/market_chart?vs_currency=usd&days=1`).then(
-			(response)=>{
-				for(let i of response.data.prices){
-					this.csv.cryptData.push({x:new Date(i[0]),y:i[1]})
-				}
-			
-			}
-    
+    await this.httpClient.get(`https://api.coingecko.com/api/v3/coins/${cryptId}/market_chart?vs_currency=usd&days=1`).subscribe(
+      (response:any) => {
+        for (let i of response.prices) {
+          this.csv.cryptData.push({ x: new Date(i[0]), y: i[1] });
+        }
+        this.router.navigate(['charts',cryptId])
+
+      }
+
     )
-    this.router.navigate(['charts',cryptId])
 }
 }

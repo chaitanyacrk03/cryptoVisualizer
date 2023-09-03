@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import axios from 'axios';
+import {HttpClient} from '@angular/common/http';
 import { CryptoCallService } from '../crypto-call.service';
 @Component({
   selector: 'app-home',
@@ -7,7 +7,7 @@ import { CryptoCallService } from '../crypto-call.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit{
-    constructor(private cryptoService: CryptoCallService){
+    constructor(private cryptoService: CryptoCallService,private httpClient: HttpClient){
 
     }
   cryptoData:{
@@ -26,10 +26,10 @@ export class HomeComponent implements OnInit{
     this.getCryptoData()
   }
    getCryptoData(){
-     axios.get("http://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en")
-    .then((response:any)=>{
+     let response=this.httpClient.get("http://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en")
+    .subscribe((response:any)=>{
         let id=0
-        response.data.forEach((data: {
+        response.forEach((data: {
           id: any;
             current_price: Number;
             market_cap_change_24h: any;
@@ -48,7 +48,6 @@ export class HomeComponent implements OnInit{
             })
         })
     })
-    .catch()
   }
 
   
