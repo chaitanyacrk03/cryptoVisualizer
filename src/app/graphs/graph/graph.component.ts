@@ -1,36 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import axios from 'axios';
+import { CryptoCallService } from 'src/app/crypto-call.service';
 @Component({
   selector: 'app-graph',
   templateUrl: './graph.component.html',
   styleUrls: ['./graph.component.css']
 })
 export class GraphComponent implements OnInit{
-	constructor(private route : ActivatedRoute){}
+	constructor(private route : ActivatedRoute,private csv : CryptoCallService){}
 	id: any;
-	dp=[{
+	@Input() dp=[{
 		x: new Date,
 		y:Number
 	}];
-	ngOnInit(): void {
+	async ngOnInit() {
 		this.id = this.route.snapshot.paramMap.get('id')
-		axios.get(`https://api.coingecko.com/api/v3/coins/${this.id}/market_chart?vs_currency=usd&days=1`).then(
-			(response)=>{
-				for(let i of response.data.prices){
-					this.dp.push({x:new Date(i[0]),y:i[1]})
-				}
+		// await axios.get(`https://api.coingecko.com/api/v3/coins/${this.id}/market_chart?vs_currency=usd&days=1`).then(
+		// 	(response)=>{
+		// 		for(let i of response.data.prices){
+		// 			this.dp.push({x:new Date(i[0]),y:i[1]})
+		// 		}
 			
-			}
-		)
+		// 	}
+		// )
 	}
+	
 	chart: any;
 	chartOptions = {
 		theme: "light2",
 		animationEnabled: true,
 		zoomEnabled: true,
 		title: {
-			text: "Market Capitalization of ACME Corp"
+			text: "24 HRS DATA"
 		},
 		axisY: {
 			labelFormatter: (e: any) => {
@@ -47,9 +49,9 @@ export class GraphComponent implements OnInit{
 		data: [{
 			type: "line",
 			xValueFormatString: "YYYY",
-			yValueFormatString: "$#,###.##",
+			yValueFormatString: "$#,###.#########",
 			dataPoints: 
-				this.dp
+				this.csv.cryptData
 		}]
 	}	
 }

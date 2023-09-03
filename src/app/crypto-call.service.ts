@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 })
 export class CryptoCallService {
   crypt=new Subject<any>;
+  cryptData:any;
 
   constructor() { }
 }
